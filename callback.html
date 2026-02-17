@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jaffari Engagement Tools — Authorization</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; max-width: 600px; margin: 80px auto; padding: 20px; text-align: center; }
+        .card { background: #f8f9fa; border-radius: 12px; padding: 32px; margin: 20px 0; }
+        h1 { color: #302b63; }
+        .code { background: #1a1a2e; color: #25f4ee; padding: 16px; border-radius: 8px; font-family: monospace; word-break: break-all; margin: 16px 0; }
+        .success { color: #2e7d32; font-size: 1.2em; }
+        .info { color: #666; font-size: 0.9em; margin-top: 16px; }
+    </style>
+</head>
+<body>
+    <h1>Jaffari Engagement Tools</h1>
+    <div class="card">
+        <p class="success" id="status">Processing authorization...</p>
+        <div class="code" id="code-display"></div>
+        <p class="info" id="info"></p>
+    </div>
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const code = params.get('code');
+        const state = params.get('state');
+        const error = params.get('error');
+        
+        if (error) {
+            document.getElementById('status').textContent = 'Authorization failed';
+            document.getElementById('status').style.color = '#d32f2f';
+            document.getElementById('code-display').textContent = 'Error: ' + error;
+        } else if (code) {
+            document.getElementById('status').textContent = '✅ Authorization successful!';
+            document.getElementById('code-display').textContent = 'Authorization Code: ' + code;
+            document.getElementById('info').textContent = 'Copy this code and paste it into the engagement tools dashboard to complete setup.';
+        } else {
+            document.getElementById('status').textContent = 'Waiting for authorization...';
+            document.getElementById('code-display').textContent = 'No authorization code received yet.';
+        }
+    </script>
+</body>
+</html>
